@@ -50,7 +50,13 @@ namespace Piccolo
         MotorComponentRes m_motor_res;
 
         float m_move_speed_ratio {0.f};
+
+        META(Enable)
+        float m_vertical_move_initial_speed {10.f};
+
         float m_vertical_move_speed {0.f};
+
+
         float m_jump_horizontal_speed_ratio {0.f};
 
         Vector3 m_desired_displacement;
