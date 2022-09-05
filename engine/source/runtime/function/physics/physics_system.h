@@ -17,17 +17,17 @@ namespace Pilot
     public:
         void tick(float delta_time);
 
-        void setIsUseGravity(bool is_use_gravity) { m_is_use_gravity = is_use_gravity; }
-        void setGravity(const Vector3& g) { m_gravity = g; }
-        void setGlobalDamping(float damping) { m_global_damping = damping; }
+        void setIsUseGravity(bool is_use_gravity) { m_is_use_gravity = is_use_gravity; }        // 设置是否使用重力
+        void setGravity(const Vector3& g) { m_gravity = g; }                                    // 设置重力大小
+        void setGlobalDamping(float damping) { m_global_damping = damping; }                    // 设置全局阻尼
 
         PhysicsActor* createPhysicsActor(std::weak_ptr<GObject>       gobject,
                                          const Transform&             global_transform,
-                                         const RigidBodyComponentRes& rigid_body_actor_res);
+                                         const RigidBodyComponentRes& rigid_body_actor_res);    // 创建一个物理运算的对象，包含 GO、变换、刚体组件资源的信息
         void          removePhyicsActor(PhysicsActor* gobject);
 
-        bool raycast(const Vector3& ray_start, const Vector3& ray_direction, Vector3& out_hit_position);
-        bool overlapByCapsule(const Vector3& position, const Capsule& capsule);
+        bool raycast(const Vector3& ray_start, const Vector3& ray_direction, Vector3& out_hit_position);    // 光线投射，根据起点和方向，计算距离和投射到的点位置
+        bool overlapByCapsule(const Vector3& position, const Capsule& capsule);                 
 
     protected:
         void collideAndResolve();

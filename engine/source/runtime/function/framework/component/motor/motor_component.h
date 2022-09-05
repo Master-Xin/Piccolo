@@ -39,17 +39,23 @@ namespace Pilot
         float getSpeedRatio() const { return m_move_speed_ratio; }
         bool  getIsMoving() const { return m_is_moving; }
 
+        // 自己加的
+        const Vector3& getMoveDirection() const { return m_desired_horizontal_move_direction; }
+
     private:
         void calculatedDesiredHorizontalMoveSpeed(unsigned int command, float delta_time);
         void calculatedDesiredVerticalMoveSpeed(unsigned int command, float delta_time);
         void calculatedDesiredMoveDirection(unsigned int command, const Quaternion& object_rotation);
+
+        void calculatedDesiredMoveDirectionNew(unsigned int command, const Vector3& camera_direction);
+
         void calculateDesiredDisplacement(float delta_time);
         void calculateTargetPosition(const Vector3&& current_position);
 
         META(Enable)
-        MotorComponentRes m_motor_res;
+        MotorComponentRes m_motor_res;              // 能够驱动的速度范围、加速度等等固定的数值
 
-        float m_move_speed_ratio {0.f};
+        float m_move_speed_ratio {0.f};             // 当前的移动速度比率
         float m_vertical_move_speed {0.f};
         float m_jump_horizontal_speed_ratio {0.f};
 

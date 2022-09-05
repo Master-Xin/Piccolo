@@ -34,9 +34,9 @@ namespace Pilot
         REFLECTION_BODY(ObjectInstanceRes);
 
     public:
-        std::string              m_name;
-        std::string              m_definition;
+        std::string              m_name;            // 对象实例化资源的名称
+        std::string              m_definition;      // 对象实例化资源的定义/url
 
-        std::vector<Reflection::ReflectionPtr<Component>> m_instanced_components;
+        std::vector<Reflection::ReflectionPtr<Component>> m_instanced_components;   // 实例化的运算组件
     };
 } // namespace Pilot

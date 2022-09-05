@@ -73,6 +73,7 @@ namespace Pilot
     }
     void Skeleton::applyAdditivePose(const AnimationPose& pose)
     {
+        // 对每个骨骼
         for (int i = 0; i < pose.m_bone_poses.size() && i < m_bone_count; i++)
         {
             int bone_index = i;
@@ -80,6 +81,8 @@ namespace Pilot
             {
                 bone_index = pose.m_bone_indexs[i];
             }
+
+            // 对每个骨骼在 local 坐标下应用变换
             Bone& bone = m_bones[bone_index];
             bone.rotate(pose.m_bone_poses[i].m_rotation);
             bone.scale(pose.m_bone_poses[i].m_scale);

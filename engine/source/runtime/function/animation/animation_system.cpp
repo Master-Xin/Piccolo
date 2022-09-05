@@ -17,6 +17,9 @@ namespace Pilot
         std::shared_ptr<SkeletonData> res;
         AnimationLoader               loader;
         auto                          found = m_skeleton_definition_cache.find(file_path);
+
+        // 如果在 cache 中没有找到对应路径的资源，就使用 loadSkeletonData 来进行资源的读取，并将其存在 cache 中
+        // 这个 cache 显然是为了加速用的
         if (found == m_skeleton_definition_cache.end())
         {
             res = loader.loadSkeletonData(file_path);

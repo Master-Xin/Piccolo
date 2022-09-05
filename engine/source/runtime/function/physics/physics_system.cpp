@@ -103,6 +103,8 @@ namespace Pilot
 
         Ray   ray(ray_start, ray_direction);
         float distance = FLT_MAX;
+
+        // 对每个物理计算对象进行相应的光线投射，计算投射距离和投射点的位置
         for (int i = 0; i < m_physics_actors.size(); ++i)
         {
             RayCollision collision;

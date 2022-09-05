@@ -11,13 +11,15 @@ namespace Pilot
     class LogSystem final
     {
     public:
+
+        // 日志打印等级
         enum class LogLevel : uint8_t
         {
-            debug,
-            info,
-            warn,
-            error,
-            fatal
+            debug,  // 调试
+            info,   // 信息
+            warn,   // 警告
+            error,  // 错误
+            fatal   // 灾难性错误
         };
 
     public:

@@ -32,11 +32,11 @@ namespace Pilot
         REFLECTION_BODY(BlendStateWithClipData);
 
     public:
-        int                          m_clip_count;
-        std::vector<AnimationClip>   m_blend_clip;
-        std::vector<AnimSkelMap>     m_blend_anim_skel_map;
-        std::vector<BoneBlendWeight> m_blend_weight;
-        std::vector<float>           m_blend_ratio;
+        int                          m_clip_count;      // 要混合的 clip 的数量
+        std::vector<AnimationClip>   m_blend_clip;      // 所有要混合的 clip 的数据
+        std::vector<AnimSkelMap>     m_blend_anim_skel_map;     // 所有 clip 的 骨骼映射（？）
+        std::vector<BoneBlendWeight> m_blend_weight;            // 各个 clip 的混合权重
+        std::vector<float>           m_blend_ratio;             // 各个 clip 参与混合的比率点
     };
 
     REFLECTION_TYPE(ClipBase)

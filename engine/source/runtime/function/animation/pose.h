@@ -8,7 +8,7 @@ namespace Pilot
     {
         static void extractFromClip (std::vector<Transform>&bones, const AnimationClip& clip, float ratio);
     public:
-        std::vector<Transform> m_bone_poses;
+        std::vector<Transform> m_bone_poses;        // 每个关节的 pose
         bool                   m_reorder {false};
         std::vector<int>       m_bone_indexs;
         BoneBlendWeight        m_weight;

@@ -66,12 +66,12 @@ namespace Pilot
 #define tryGetComponentConst(COMPONENT_TYPE) tryGetComponentConst<const COMPONENT_TYPE>(#COMPONENT_TYPE)
 
     protected:
-        GObjectID   m_id {k_invalid_gobject_id};
-        std::string m_name;
-        std::string m_definition_url;
+        GObjectID   m_id {k_invalid_gobject_id};    // GO 的 ID
+        std::string m_name;                         // GO 的 名称
+        std::string m_definition_url;               // GO 定义的 url
 
         // we have to use the ReflectionPtr due to that the components need to be reflected 
-        // in editor, and it's polymorphism
-        std::vector<Reflection::ReflectionPtr<Component>> m_components;
+        // in editor, and it's polymorphism 是多态的
+        std::vector<Reflection::ReflectionPtr<Component>> m_components;     // GO 的组件化的计算
     };
 } // namespace Pilot

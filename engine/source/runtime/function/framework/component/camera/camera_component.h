@@ -30,6 +30,9 @@ namespace Pilot
 
         void tick(float delta_time) override;
 
+        // 自己加的接口
+        const Vector3& getCameraForwardDirection() const { return m_foward; }
+
     private:
         void tickFirstPersonCamera(float delta_time);
         void tickThirdPersonCamera(float delta_time);

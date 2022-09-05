@@ -18,8 +18,10 @@ namespace Pilot
 
     class PilotEngine
     {
+        // 友元类
         friend class PilotEditor;
 
+        // 
         static const float k_fps_alpha;
 
     public:
@@ -51,7 +53,7 @@ namespace Pilot
 
         bool m_is_quit {false};
 
-        std::chrono::steady_clock::time_point m_last_tick_time_point {std::chrono::steady_clock::now()};
+        std::chrono::steady_clock::time_point m_last_tick_time_point {std::chrono::steady_clock::now()};    // 记录每次 tick 运算开始的时间点
 
         float m_average_duration {0.f};
         int   m_frame_count {0};

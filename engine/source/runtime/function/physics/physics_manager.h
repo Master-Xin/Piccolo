@@ -25,7 +25,7 @@ namespace Pilot
         void initialize();
         void clear();
 
-        std::weak_ptr<PhysicsScene> createPhysicsScene(const Vector3& gravity);
+        std::weak_ptr<PhysicsScene> createPhysicsScene(const Vector3& gravity);     // 创建一个物理场景
         void                        deletePhysicsScene(std::weak_ptr<PhysicsScene> physics_scene);
 
 #ifdef ENABLE_PHYSICS_DEBUG_RENDERER

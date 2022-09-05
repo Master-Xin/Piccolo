@@ -15,19 +15,19 @@ namespace Pilot
     class RenderCamera
     {
     public:
-        RenderCameraType m_current_camera_type {RenderCameraType::Editor};
+        RenderCameraType m_current_camera_type {RenderCameraType::Editor};  // 相机类型是编辑模式的相机（而非游戏模式下，即 motor）
 
-        static const Vector3 X, Y, Z;
+        static const Vector3 X, Y, Z;                       // 相机的三个轴
 
-        Vector3    m_position {0.0f, 0.0f, 0.0f};
-        Quaternion m_rotation {Quaternion::IDENTITY};
-        Quaternion m_invRotation {Quaternion::IDENTITY};
-        float      m_znear {1000.0f};
-        float      m_zfar {0.1f};
-        Vector3    m_up_axis {Z};
+        Vector3    m_position {0.0f, 0.0f, 0.0f};           // 相机的位置
+        Quaternion m_rotation {Quaternion::IDENTITY};       // 相机的旋转
+        Quaternion m_invRotation {Quaternion::IDENTITY};    // 相机旋转的逆
+        float      m_znear {1000.0f};                       // 相机 Z 轴的近处
+        float      m_zfar {0.1f};                           // 相机 Z 轴的远处
+        Vector3    m_up_axis {Z};                           // 相机的朝上的轴为 Z 轴
 
-        static constexpr float MIN_FOV {10.0f};
-        static constexpr float MAX_FOV {89.0f};
+        static constexpr float MIN_FOV {10.0f};             // 最小可视域
+        static constexpr float MAX_FOV {89.0f};             // 最大可视域
         static constexpr int   MAIN_VIEW_MATRIX_INDEX {0};
 
         std::vector<Matrix4x4> m_view_matrices {Matrix4x4::IDENTITY};
@@ -44,7 +44,7 @@ namespace Pilot
         void setFOVx(float fovx) { m_fovx = fovx; }
 
         Vector3    position() const { return m_position; }
-        Quaternion rotation() const { return m_rotation; }
+        Quaternion rotation() const { return m_rotation; }      // 相机的旋转的角度
 
         Vector3   forward() const { return (m_invRotation * Y); }
         Vector3   up() const { return (m_invRotation * Z); }

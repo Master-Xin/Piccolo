@@ -33,12 +33,12 @@ namespace Pilot
         bool loadLevel(const std::string& level_url);
 
         bool                      m_is_world_loaded {false};
-        std::string               m_current_world_url;
+        std::string               m_current_world_url;          // 当前世界的 url, asset/world/hello.world.json
         std::shared_ptr<WorldRes> m_current_world_resource;
 
         // all loaded levels, key: level url, vaule: level instance
-        std::unordered_map<std::string, std::shared_ptr<Level>> m_loaded_levels;
+        std::unordered_map<std::string, std::shared_ptr<Level>> m_loaded_levels;    // 
         // active level, currently we just support one active level
-        std::weak_ptr<Level> m_current_active_level;
+        std::weak_ptr<Level> m_current_active_level;            // level 的实例
     };
 } // namespace Pilot

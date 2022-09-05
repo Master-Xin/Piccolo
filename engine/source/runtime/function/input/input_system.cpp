@@ -151,13 +151,17 @@ namespace Pilot
 
     void InputSystem::tick()
     {
+        // 计算光标角度
+
         calculateCursorDeltaAngles();
         clear();
 
         std::shared_ptr<WindowSystem> window_system = g_runtime_global_context.m_window_system;
+
+        // 键盘输入
         if (window_system->getFocusMode())
         {
-            m_game_command &= (k_complement_control_command ^ (unsigned int)GameCommand::invalid);
+            m_game_command &= (k_complement_control_command ^ (unsigned int)GameCommand::invalid);  // 全1，与后面的按位异或
         }
         else
         {

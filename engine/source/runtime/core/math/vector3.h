@@ -442,12 +442,12 @@ namespace Pilot
         bool         isNaN() const { return Math::isNan(x) || Math::isNan(y) || Math::isNan(z); }
         // special points
         static const Vector3 ZERO;
-        static const Vector3 UNIT_X;
-        static const Vector3 UNIT_Y;
-        static const Vector3 UNIT_Z;
-        static const Vector3 NEGATIVE_UNIT_X;
-        static const Vector3 NEGATIVE_UNIT_Y;
-        static const Vector3 NEGATIVE_UNIT_Z;
+        static const Vector3 UNIT_X;            // 世界坐标系的 x 方向
+        static const Vector3 UNIT_Y;            // 世界坐标系的 y 方向
+        static const Vector3 UNIT_Z;            // 世界坐标系的 z 方向
+        static const Vector3 NEGATIVE_UNIT_X;   // 世界坐标系的 -x 方向
+        static const Vector3 NEGATIVE_UNIT_Y;   // 世界坐标系的 -y 方向
+        static const Vector3 NEGATIVE_UNIT_Z;   // 世界坐标系的 -z 方向
         static const Vector3 UNIT_SCALE;
     };
 } // namespace Pilot

@@ -33,9 +33,9 @@ namespace Pilot
     {
         struct JoltPhysics
         {
-            JPH::PhysicsSystem*            m_jolt_physics_system {nullptr};
-            JPH::JobSystem*                m_jolt_job_system {nullptr};
-            JPH::TempAllocator*            m_temp_allocator {nullptr};
+            JPH::PhysicsSystem*            m_jolt_physics_system {nullptr};                 // 振动物理系统
+            JPH::JobSystem*                m_jolt_job_system {nullptr};                     // 振动的任务系统
+            JPH::TempAllocator*            m_temp_allocator {nullptr};                      // 
             JPH::BroadPhaseLayerInterface* m_jolt_broad_phase_layer_interface {nullptr};
 
             int m_collision_steps {1};

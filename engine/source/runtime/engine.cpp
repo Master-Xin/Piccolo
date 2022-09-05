@@ -19,8 +19,10 @@ namespace Pilot
     {
         m_init_params = param;
 
+        // 构建出所有需要元数据的类型的元数据
         Reflection::TypeMetaRegister::Register();
 
+        // 进行引擎中物理、渲染、窗口、配置等系统的初始化
         g_runtime_global_context.startSystems(param);
 
         LOG_INFO("engine start");
@@ -56,18 +58,26 @@ namespace Pilot
         {
             using namespace std::chrono;
 
+            // 获得当前 tick 计算开始的时间点
             steady_clock::time_point tick_time_point = steady_clock::now();
+
+            // 减去上一次 tick 计算开始的时间点，获得时长
             duration<float> time_span = duration_cast<duration<float>>(tick_time_point - m_last_tick_time_point);
             delta_time                = time_span.count();
 
+            // 将这次 tick 开始的时间点记录下来
             m_last_tick_time_point = tick_time_point;
         }
+
+        // 返回上一次 tick 的运算时长
         return delta_time;
     }
 
     bool PilotEngine::tickOneFrame(float delta_time)
     {
+        // 动画、物理计算，读取输入数据
         logicalTick(delta_time);
+
         calculateFPS(delta_time);
 
         // single thread
@@ -92,7 +102,10 @@ namespace Pilot
 
     void PilotEngine::logicalTick(float delta_time)
     {
+        // 先是动画、物理的计算，对一些模块内的状态数据进行更新
         g_runtime_global_context.m_world_manager->tick(delta_time);
+
+        // 后是对输入数据进行读取保存，放在输入系统中的 m_command 当中
         g_runtime_global_context.m_input_system->tick();
     }
 

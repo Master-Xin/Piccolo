@@ -116,12 +116,19 @@ namespace Pilot
 
         ThirdPersonCameraParameter* param = static_cast<ThirdPersonCameraParameter*>(m_camera_res.m_parameter);
 
+        // 偏航角、俯仰角
         Quaternion q_yaw, q_pitch;
 
+        // 输入鼠标计算出的偏航角、以及 Z 轴向量，得到旋转四元数
+        // 输入鼠标计算出的俯仰角、以及 X 轴向量，得到旋转四元数
         q_yaw.fromAngleAxis(g_runtime_global_context.m_input_system->m_cursor_delta_yaw, Vector3::UNIT_Z);
         q_pitch.fromAngleAxis(g_runtime_global_context.m_input_system->m_cursor_delta_pitch, Vector3::UNIT_X);
 
+        // 修改第三人称的光标俯仰角
         param->m_cursor_pitch = q_pitch * param->m_cursor_pitch;
+
+        // 读取现在相机的水平、竖直偏移
+        // 读取当前角色的位置、旋转角度
 
         const float vertical_offset   = param->m_vertical_offset;
         const float horizontal_offset = param->m_horizontal_offset;
@@ -130,8 +137,17 @@ namespace Pilot
         Vector3 center_pos = current_character->getPosition() + Vector3::UNIT_Z * vertical_offset;
         Vector3 camera_pos =
             current_character->getRotation() * param->m_cursor_pitch * offset + current_character->getPosition();
+
+
+
+        // 改变相机的位置
         Vector3 camera_forward = center_pos - camera_pos;
         Vector3 camera_up      = current_character->getRotation() * param->m_cursor_pitch * Vector3::UNIT_Z;
+
+        //==================
+        m_foward = camera_forward;
+        m_up     = camera_up;
+        //==================
 
         current_character->setRotation(q_yaw * current_character->getRotation());
 

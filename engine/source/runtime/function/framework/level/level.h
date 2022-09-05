@@ -44,12 +44,12 @@ namespace Pilot
         void clear();
 
         bool        m_is_loaded {false};
-        std::string m_level_res_url;
+        std::string m_level_res_url;        // level 资源的 url，用于加载运算组件 "asset/level/1-1.level.json"
 
         // all game objects in this level, key: object id, value: object instance
-        LevelObjectsMap m_gobjects;
+        LevelObjectsMap m_gobjects;         // level 中的所有 GO 
 
-        std::shared_ptr<Character> m_current_active_character;
+        std::shared_ptr<Character> m_current_active_character;      // 当前活动的角色
 
         std::weak_ptr<PhysicsScene> m_physics_scene;
     };

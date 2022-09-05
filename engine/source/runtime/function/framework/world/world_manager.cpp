@@ -39,12 +39,14 @@ namespace Pilot
 
     void WorldManager::tick(float delta_time)
     {
+        // 加载游戏世界资源
         if (!m_is_world_loaded)
         {
-            loadWorld(m_current_world_url);
+            loadWorld(m_current_world_url);     // 输入 "asset/world/hello.world.json"
         }
 
         // tick the active level
+        // 根据活跃等级进行 tick 运算
         std::shared_ptr<Level> active_level = m_current_active_level.lock();
         if (active_level)
         {
@@ -63,9 +65,11 @@ namespace Pilot
         return active_level->getPhysicsScene();
     }
 
-    bool WorldManager::loadWorld(const std::string& world_url)
+    bool WorldManager::loadWorld(const std::string& world_url)      // 输入 "asset/world/hello.world.json"
     {
         LOG_INFO("loading world: {}", world_url);
+
+        // 根据世界的 url，获取世界资源的描述信息
         WorldRes   world_res;
         const bool is_world_load_success = g_runtime_global_context.m_asset_manager->loadAsset(world_url, world_res);
         if (!is_world_load_success)
@@ -73,6 +77,7 @@ namespace Pilot
             return false;
         }
 
+        // 当前世界资源描述
         m_current_world_resource = std::make_shared<WorldRes>(world_res);
 
         const bool is_level_load_success = loadLevel(world_res.m_default_level_url);
@@ -93,12 +98,13 @@ namespace Pilot
         return true;
     }
 
-    bool WorldManager::loadLevel(const std::string& level_url)
+    bool WorldManager::loadLevel(const std::string& level_url)  //  输入 "asset/level/1-1.level.json"
     {
+        // 设置当前的活跃的等级
         std::shared_ptr<Level> level = std::make_shared<Level>();
-        // set current level temporary
         m_current_active_level       = level;
 
+        // 
         const bool is_level_load_success = level->load(level_url);
         if (is_level_load_success == false)
         {

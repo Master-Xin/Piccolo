@@ -11,7 +11,7 @@ namespace Pilot
 {
     struct WindowCreateInfo
     {
-        int         width {1280};
+        int         width {1280};          
         int         height {720};
         const char* title {"Pilot"};
         bool        is_fullscreen {false};

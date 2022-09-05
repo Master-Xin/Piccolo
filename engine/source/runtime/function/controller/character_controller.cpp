@@ -49,14 +49,10 @@ namespace Pilot
         Vector3 final_position = current_position;
 
         m_is_touch_ground = physics_scene->sweep(
-            m_rigidbody_shape,
-            world_transform.getMatrix(),
-            Vector3::NEGATIVE_UNIT_Z,
-            0.105f,
-            hits);
+            m_rigidbody_shape, world_transform.getMatrix(), Vector3::NEGATIVE_UNIT_Z, 0.105f, hits);
 
         hits.clear();
-        
+
         world_transform.m_position -= 0.1f * Vector3::UNIT_Z;
 
         // vertical pass
@@ -76,20 +72,51 @@ namespace Pilot
 
         hits.clear();
 
+
         // side pass
-        //if (physics_scene->sweep(
-        //    m_rigidbody_shape,
-        //    /**** [0] ****/,
-        //    /**** [1] ****/,
-        //    /**** [2] ****/,
-        //    hits))
-        //{
-        //    final_position += /**** [3] ****/;
-        //}
-        //else
+        // 水平方向有障碍物
+        if (physics_scene->sweep(
+            m_rigidbody_shape,
+            world_transform.getMatrix(),
+            horizontal_direction,
+            horizontal_displacement.length(),
+            hits))
         {
-            final_position += horizontal_displacement;
+            // 如果是高障碍物阻挡
+            world_transform.m_position += 0.4f * Vector3::UNIT_Z;
+            if (physics_scene->sweep(
+                m_rigidbody_shape,
+                world_transform.getMatrix(),
+                horizontal_direction,
+                horizontal_displacement.length(),
+                hits))
+            {
+                // 修正运动方向，沿着斜面走
+                float cosTheta = 0.f - Math::cos(hits[0].hit_normal.angleBetween(horizontal_direction));
+                final_position +=
+                    (horizontal_displacement + cosTheta * horizontal_displacement.length() * hits[0].hit_normal);
+            }
+            // 如果是低障碍物阻挡
+            else
+            {
+                // 水平方向正常移动
+                final_position += horizontal_displacement;
+
+                // 竖直方向进行位置修正，即将角色高度与台阶高度同步
+                if (physics_scene->raycast(
+                        final_position + 0.1f * Vector3::UNIT_Z, Vector3::NEGATIVE_UNIT_Z, 0.995f, hits))
+                {
+                    final_position = hits[0].hit_position;
+                }
+            }
+            hits.clear();
         }
+        else
+        {
+            final_position += horizontal_displacement; 
+        }
+
+        hits.clear();
 
         return final_position;
     }

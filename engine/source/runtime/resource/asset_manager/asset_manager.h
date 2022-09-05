@@ -17,21 +17,24 @@ namespace Pilot
     {
     public:
         template<typename AssetType>
+
+        // 根据 url，返回资产资源
         bool loadAsset(const std::string& asset_url, AssetType& out_asset) const
         {
             // read json file to string
+            // 读取 json 格式的文件，转成字符串
             std::ifstream asset_json_file(getFullPath(asset_url));
             if (!asset_json_file)
             {
                 LOG_ERROR("open file: {} failed!", asset_url);
                 return false;
             }
-
             std::stringstream buffer;
             buffer << asset_json_file.rdbuf();
             std::string asset_json_text(buffer.str());
 
             // parse to json object and read to runtime res object
+            // 解释为资产的 json 对象，来读取到运行时资源对象
             std::string error;
             auto&&      asset_json = PJson::parse(asset_json_text, error);
             if (!error.empty())
@@ -40,6 +43,7 @@ namespace Pilot
                 return false;
             }
 
+            // 根据解释出的 json 对象，将 json 序列化为资产数据并输出
             PSerializer::read(asset_json, out_asset);
             return true;
         }

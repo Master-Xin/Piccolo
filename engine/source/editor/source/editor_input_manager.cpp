@@ -52,11 +52,13 @@ namespace Pilot
 
     void EditorInputManager::processEditorCommand()
     {
-        float           camera_speed  = m_camera_speed;
-        std::shared_ptr editor_camera = g_editor_global_context.m_scene_manager->getEditorCamera();
-        Quaternion      camera_rotate = editor_camera->rotation().inverse();
-        Vector3         camera_relative_pos(0, 0, 0);
+        // 设置相机的位姿
+        float           camera_speed  = m_camera_speed;     // 相机速度
+        std::shared_ptr editor_camera = g_editor_global_context.m_scene_manager->getEditorCamera();     // 访问编辑器的相机
+        Quaternion      camera_rotate = editor_camera->rotation().inverse();                            // 
+        Vector3         camera_relative_pos(0, 0, 0);                                                   // 
 
+        
         if ((unsigned int)EditorCommand::camera_foward & m_editor_command)
         {
             camera_relative_pos += camera_rotate * Vector3 {0, camera_speed, 0};

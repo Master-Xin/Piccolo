@@ -28,9 +28,13 @@ namespace Pilot
 
     GObjectID Level::createObject(const ObjectInstanceRes& object_instance_res)
     {
+        // 创建一个 GO 对象，得到对象的下一个 GO 的 ID
         GObjectID object_id = ObjectIDAllocator::alloc();
+
+        // 断定 ID 没有超出非法 ID
         ASSERT(object_id != k_invalid_gobject_id);
 
+        // 创建新的 GO，为其分配 ID（ ID 的管理由 GObjectID 类来完成）
         std::shared_ptr<GObject> gobject;
         try
         {
@@ -41,25 +45,32 @@ namespace Pilot
             LOG_FATAL("cannot allocate memory for new gobject");
         }
 
+        // 为 GO 加载对象实例资源，也就是加载运算组件
         bool is_loaded = gobject->load(object_instance_res);
         if (is_loaded)
         {
+            // 将 id 和 GO 存到 level 对象当中
             m_gobjects.emplace(object_id, gobject);
         }
+        // 加载运算组件失败，打印 GO 的名称，返回非法 ID
         else
         {
             LOG_ERROR("loading object " + object_instance_res.m_name + " failed");
             return k_invalid_gobject_id;
         }
+
+        // 加载运算组件成功后，返回对象的 ID
         return object_id;
     }
 
-    bool Level::load(const std::string& level_res_url)
+    bool Level::load(const std::string& level_res_url)  // 输入 "asset/level/1-1.level.json"
     {
         LOG_INFO("loading level: {}", level_res_url);
 
+        // 设置 level 对象内各种资源的 url
         m_level_res_url = level_res_url;
 
+        // 根据资源定位符，把资源数据加载出来，也就是运算的组件
         LevelRes   level_res;
         const bool is_load_success = g_runtime_global_context.m_asset_manager->loadAsset(level_res_url, level_res);
         if (is_load_success == false)
@@ -67,21 +78,27 @@ namespace Pilot
             return false;
         }
 
+        // 断定物理系统管理器是已经创建过的
         ASSERT(g_runtime_global_context.m_physics_manager);
+
+        // 根据对象资源的重力数据，创建物理计算的场景
         m_physics_scene = g_runtime_global_context.m_physics_manager->createPhysicsScene(level_res.m_gravity);
 
+        // 对 level 中的每个对象资源实例，创建与之对应的 GO 对象并放入 level 对象当中保存起来
         for (const ObjectInstanceRes& object_instance_res : level_res.m_objects)
         {
             createObject(object_instance_res);
         }
 
         // create active character
+        // 对 level 中保存的各个 GO
         for (const auto& object_pair : m_gobjects)
         {
             std::shared_ptr<GObject> object = object_pair.second;
             if (object == nullptr)
                 continue;
 
+            // 找到 level_res 对应的 GO，如果是
             if (level_res.m_character_name == object->getName())
             {
                 m_current_active_character = std::make_shared<Character>(object);
@@ -143,18 +160,24 @@ namespace Pilot
             return;
         }
 
+        //  对每个 GO，进行 tick 循环计算
         for (const auto& id_object_pair : m_gobjects)
         {
             assert(id_object_pair.second);
             if (id_object_pair.second)
             {
+                // 每个 GO 的 tick 循环
                 id_object_pair.second->tick(delta_time);
             }
         }
         if (m_current_active_character && g_is_editor_mode == false)
         {
+            // 如果角色是可控的状态，根据输入更新位置和角度
+
             m_current_active_character->tick(delta_time);
         }
+
+        // 计算物理参数 ？
 
         std::shared_ptr<PhysicsScene> physics_scene = m_physics_scene.lock();
         if (physics_scene)

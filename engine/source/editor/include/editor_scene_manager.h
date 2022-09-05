@@ -68,7 +68,7 @@ namespace Pilot
         Matrix4x4 m_selected_object_matrix{ Matrix4x4::IDENTITY };
 
         EditorAxisMode m_axis_mode{ EditorAxisMode::TranslateMode };
-        std::shared_ptr<RenderCamera> m_camera;
+        std::shared_ptr<RenderCamera> m_camera;     // 是编辑器场景管理器中的相机，类型是 RenderCamera
 
         size_t m_selected_axis{ 3 };
 
